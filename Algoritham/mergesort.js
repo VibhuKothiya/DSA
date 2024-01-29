@@ -1,62 +1,52 @@
-
-function merge(left, right){
-  // console.log(left,right);
-  // let i=0, j=0;
-  let newArr = [];
-  while(left.length && right.length){
-    if(left[0] <= right[0]){      
-      newArr.push(left.shift());
-        // i++;                
-    }
-    else{
-      newArr.push(right.shift());
-      // console.log();
-        
-               
-    }
-  }
-return [...newArr, ...left, ...right] 
-  
-  // return newArr;
-}
-
 function divide(arr){
-  // console.log(arr.length, si, ei);
   if(arr.length < 2){
-    return arr;
+      return arr;
   }
-  let mid = Math.floor(arr.length/2); 
-// console.log(mid);
+  let mid = Math.floor(arr.length/2);
+  let left = [];
+  let right = [];
+
+  for(let i = 0; i < mid; i++){
+      left.push(arr[i]);
+  }
+  for(let i = mid; i < arr.length; i++){
+    right.push(arr[i]);
+  }
   
-  // let leftArr= [];
-  // for(let i=0; i <= mid; i++){
-  //   leftArr.push(arr[i]);
-  // }
-  // // console.log(leftArr);
-  // let lsi = 0;
-  // let lei = leftArr.length-1;  
-
-  // let rightArr= [];
-  // for(let j = mid+1; j <= arr.length-1; j++){
-  //   rightArr.push(arr[j]);
-  // }
-
-  // let rsi = 0;
-  // let rei = rightArr.length-1;
-
-  let leftArr = arr.slice(0, mid);
-  let rightArr = arr.slice(mid);
-  
-    
-  // console.log(leftArr, "left");
-  // console.log(rightArr, "right");
-  // console.log(leftArr);
-  return merge(divide(leftArr), divide(rightArr));    
+    // console.log(divide(left));
+    // console.log(divide(right));
+    return merge(divide(left),divide(right));
     
 }
+function merge(left, right){
+  console.log(left,right);
+  let temp = [];
+  let i = 0; 
+  let j = 0;
 
-const arr = [4,3,6,8,9,1];
-// let si = 0;
-// let ei = arr.length-1;
-// console.log(ei);
-console.log(divide(arr));
+  while(i < left.length && j < right.length){
+      if(left[i] < right[j]){
+      temp.push(left[i]);
+      i++;
+  }
+  else{
+    temp.push(right[j]);
+    j++;
+  }
+}
+while(i < left.length){
+  temp.push(left[i]);
+  i++;
+}
+
+while(j < right.length){
+  temp.push(right[j]);
+  j++;
+}
+return temp;
+}
+
+
+const arr = [9,6,4,2];
+let result = divide(arr);
+console.log(result, "sorted");
