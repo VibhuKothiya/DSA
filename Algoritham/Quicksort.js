@@ -1,28 +1,36 @@
-function quicksort(arr){
-    if(arr.length <= 1){
-        return arr;
-    }
+function partition(arr, low, high) {
 
-    let pivot = arr[0];
-    let left = [];
-    let right = [];
-    
+    let pivot = arr[high];
+    let i = low - 1;
+    for (let j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            //swap
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
 
-    for(let i = 1; i < arr.length; i++){
-        if(arr[i] < pivot){
-            left.push(arr[i]);
-        }
-        else{
-            right.push(arr[i]);
         }
     }
-    quicksort(left);
-    quicksort(right);
-    
-    console.log(left, right);
-   return newarray = [...left, pivot, ...right]
+    i++;
+    let temp = arr[i];
+    arr[i] = arr[high];
+    arr[high] = temp;
+
+    return i;
 }
 
-const arr = [6,8,2,9,5];
-quicksort(arr);
-console.log(newarray);
+function quicksort(arr, low, high) {
+    if (low <= high) {
+        let pi = partition(arr, low, high);
+
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
+    }
+
+}
+
+const arr = [10,80,50,20,90,40];
+
+quicksort(arr, 0, arr.length - 1);
+console.log(arr);
